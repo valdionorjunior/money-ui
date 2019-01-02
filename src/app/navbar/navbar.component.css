@@ -1,0 +1,44 @@
+.navbar{
+    padding: 10px 0;
+    background-color: #1e94d2;
+}
+
+.navbar-toggle{
+    color: #fff;
+}
+
+.navbar-menu{
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 210px;
+    z-index: 9998; /*Define prioridade que o uqe fica acima de que, nesse caso numero muito lalto prioridade maior*/
+    list-style: none; /*propriedade para retirar as bolinhas do atributo <LI> que fica assim "* Exemplo" */
+    background-color: #0C0F10;
+}
+
+.navbar-usuario{
+    padding: 15px;
+    border-bottom: 1px solid #525151;
+    margin-bottom: 15px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;    
+}
+
+.navbar-menu-item{
+    padding: 15px;
+}
+
+.navbar-menu-item a{
+    color: rgb(197, 201, 201);
+    text-decoration: none;
+}
+
+.navbar-menu-item a:hover{ /*quando estiver com o mouse sobre estiliza conforme abaixo*/
+    color: #fff;
+}
