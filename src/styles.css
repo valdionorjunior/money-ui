@@ -6,6 +6,14 @@ body{
     color: #0C0F10;
 }
 
+body .ui-button {
+    margin: 3px;
+}
+
+.ui-message.ui-message-error {
+    margin-top: 4px;
+}
+
 a {
     color: #337ab7;
     text-decoration: none;
