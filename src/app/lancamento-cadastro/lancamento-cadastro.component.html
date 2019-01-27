@@ -1,0 +1,51 @@
+<div class="container">
+  <form action="">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Novo Lançamento</h1>
+      </div>
+      <!-- Botao de seleao -->
+      <!-- muda recebimento pra receita de acordo com botao selecionado -->
+      <div class="ui-g-12">
+          <p-selectButton [options]="tipos" #tipoSelecionado></p-selectButton>
+        </div>
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>{{ tipoSelecionado.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
+        <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text">
+      </div>
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Valor</label>
+        <input pInputText type="text" placeholder="0,00">
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Categoria</label>
+        <p-dropdown [options]="categorias" placeholder="Selecione a categoria"
+          [autoWidth]="false"></p-dropdown>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Pesssoa</label>
+        <p-dropdown [options]="pessoas" placeholder="Selecione a pessoa"
+          [autoWidth]="false" [filter]="true"></p-dropdown>
+      </div>
+      <div class="ui-g-12 ui-fluid">
+          <label>Observação</label>
+          <textarea pInputTextarea rows="3"></textarea>
+        </div>
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" class="ui-button-rounded" style="margin-right: 2px"></button>
+        <button pButton type="button" label="Novo" class="ui-button-rounded ui-button-info" style="margin-right: 6px"></button>
+        <a href="javascript:;">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>
