@@ -2,13 +2,13 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-message',
+  selector: 'app-mensagem',
   template: `
   <p-message severity="error" text="{{ texto }}" *ngIf="temErro()"></p-message>
   `,
   styles: []
 })
-export class MessageComponent {
+export class MensagemComponent {
 @Input() erro: string;
 @Input() controle: FormControl;
 @Input() texto: string;

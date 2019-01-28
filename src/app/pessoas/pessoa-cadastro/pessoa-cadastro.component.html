@@ -8,20 +8,20 @@
         <label>Nome</label>
         <input pInputText type="text"  name="nome" 
         ngModel #nome="ngModel" required minlength="3">
-        <app-message [controle]="nome" erro="required" texto="Informe um nome"></app-message>
-        <app-message [controle]="nome" erro="minlength" texto="Nome deve ter no minimo {{ nome.errors?.minlength?.requiredLength }} caracteres!"></app-message>    
+        <app-mensagem [controle]="nome" erro="required" texto="Informe um nome"></app-mensagem>
+        <app-mensagem [controle]="nome" erro="minlength" texto="Nome deve ter no minimo {{ nome.errors?.minlength?.requiredLength }} caracteres!"></app-mensagem>    
       </div>
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Logradouro</label>
         <input pInputText type="text" name="logradouro" 
         ngModel #logradouro="ngModel" required>
-        <app-message [controle]="logradouro" erro="required" texto="Inform uma logradouro"></app-message>
+        <app-mensagem [controle]="logradouro" erro="required" texto="Inform uma logradouro"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Numero</label>
         <input pInputText type="text" name="numero" 
         ngModel #numero="ngModel" required>
-        <app-message [controle]="numero" erro="required" texto="Informe um numero"></app-message>
+        <app-mensagem [controle]="numero" erro="required" texto="Informe um numero"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>Complemento</label>
@@ -31,26 +31,26 @@
         <label>Bairro</label>
         <input pInputText type="text" name="bairro" 
         ngModel #bairro="ngModel" required>
-        <app-message [controle]="bairro" erro="required" texto="Informe um bairro"></app-message>
+        <app-mensagem [controle]="bairro" erro="required" texto="Informe um bairro"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>CEP</label>
         <p-inputMask mask="99999-999" placeholder="00000-000" name="cep" 
         ngModel #cep="ngModel" required></p-inputMask>
         <!-- <input pInputText type="text" placeholder="00000-000"> -->
-        <app-message [controle]="cep" erro="required" texto="Informe um CEP"></app-message>  
+        <app-mensagem [controle]="cep" erro="required" texto="Informe um CEP"></app-mensagem>  
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Cidade</label>
         <input pInputText type="text" name="cidade" 
         ngModel #cidade="ngModel" required>
-        <app-message [controle]="cidade" erro="required" texto="Informe uma cidade"></app-message>
+        <app-mensagem [controle]="cidade" erro="required" texto="Informe uma cidade"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Estado</label>
         <input pInputText type="text" name="estado" 
         ngModel #estado="ngModel" required>
-        <app-message [controle]="estado" erro="required" texto="Informe um estado"></app-message>
+        <app-mensagem [controle]="estado" erro="required" texto="Informe um estado"></app-mensagem>
       </div>
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar"  [disabled]="formulario.invalid"></button>

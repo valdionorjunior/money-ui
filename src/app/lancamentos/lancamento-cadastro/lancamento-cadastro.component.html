@@ -14,7 +14,7 @@
         <label>Vencimento</label>
         <p-calendar dateFormat="dd/mm/yy" name="dataVencimento" 
         ngModel #dataVencimento="ngModel" required ></p-calendar>
-        <app-message [controle]="dataVencimento" erro="required" texto="Informe uma data de Vencimento"></app-message>
+        <app-mensagem [controle]="dataVencimento" erro="required" texto="Informe uma data de Vencimento"></app-mensagem>
       </div>
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>{{ tipoSelecionado.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
@@ -25,34 +25,26 @@
         <label>Descrição</label>
         <input pInputText type="text" name="descricao" 
           ngModel #descricao="ngModel" required minlength="5">
-        
-        <app-message [controle]="descricao" erro="required" texto="Informe uma descricao"></app-message>
-        <app-message [controle]="descricao" erro="minlength" texto="Descrição deve ter no minimo {{ descricao.errors?.minlength?.requiredLength }} caracteres!"></app-message>
-
-        <!-- <div >
-            <p-message severity="error" text="Informe uma descrição!" *ngIf="descricao.hasError('required') && descricao.dirty"></p-message>
-        </div>
-        <div >
-            <p-message severity="error" text="Descrição deve ter no minimo {{ descricao.errors.minlength.requiredLength }} caracteres!" *ngIf="descricao.hasError('minlength') && descricao.dirty"></p-message>
-        </div> -->
+        <app-mensagem [controle]="descricao" erro="required" texto="Informe uma descricao"></app-mensagem>
+        <app-mensagem [controle]="descricao" erro="minlength" texto="Descrição deve ter no minimo {{ descricao.errors?.minlength?.requiredLength }} caracteres!"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Valor</label>
         <input pInputText type="text" placeholder="0,00" name="valor" ngModel #valor="ngModel"
           currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }" required>
-          <app-message [controle]="valor" erro="required" texto="Informe um valor"></app-message>
+          <app-mensagem [controle]="valor" erro="required" texto="Informe um valor"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
         <p-dropdown [options]="categorias" placeholder="Selecione a categoria"
           [autoWidth]="false" name="categoria" ngModel #categoria="ngModel" required></p-dropdown>
-        <app-message [controle]="categoria" erro="required" texto="Informe uma categoria"></app-message>
+        <app-mensagem [controle]="categoria" erro="required" texto="Informe uma categoria"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pesssoa</label>
         <p-dropdown [options]="pessoas" placeholder="Selecione a pessoa"
           [autoWidth]="false" [filter]="true" name="pessoa" ngModel #pessoa="ngModel" required></p-dropdown>
-        <app-message [controle]="pessoa" erro="required" texto="Informe uma pessoa"></app-message>
+        <app-mensagem [controle]="pessoa" erro="required" texto="Informe uma pessoa"></app-mensagem>
       </div>
       <div class="ui-g-12 ui-fluid">
           <label>Observação</label>

@@ -17,7 +17,6 @@
             <td class="col-data">{{lancamentos.dataPagamento  | date:'dd/MM/y'}}</td>
             <td class="col-valor" [style.color]="lancamentos.tipo === 'DESPESA' ? 'red' : 'blue'">{{lancamentos.valor | currency:'BRL':true:'1.2-2'}}</td>
             <td class="col-acoes">
-                <!-- <a pButton icon="pi pi-pencil"></a> -->
                   <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left"></button>
                   <button pButton style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
             </td>
