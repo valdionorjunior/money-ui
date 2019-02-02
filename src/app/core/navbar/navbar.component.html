@@ -1,15 +1,16 @@
-<nav class="navbar"> 
+<nav class="navbar"> ￼
   <div class="container">
     <div class="ui-g">
+      <img src="../../assets/logo.png"/>
       <div class="ui-g-12">
-        <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu"><i class="pi pi-bars"></i></a>
+        <a href="javascript:;" class="navbar-toggle"  (click)="exibindoMenu = !exibindoMenu"><i class="pi pi-bars"></i></a>
       </div>
     </div>
   </div>
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
-      <div class="ui-g-12">
+      <!-- <div class="ui-g-12">
           <img src="../../assets/logo.png" style="margin-top: 10px" align="center"/>
-        </div>
+        </div> -->
     <li class="navbar-usuario">NomeDeUsuarioLogado</li>
     <li class="navbar-menu-item"><a href="#">Lançamentos</a></li>
     <li class="navbar-menu-item"><a href="#">Pessoas</a></li>

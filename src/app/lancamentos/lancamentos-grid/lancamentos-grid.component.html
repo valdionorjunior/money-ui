@@ -18,7 +18,7 @@
             <td class="col-valor" [style.color]="lancamentos.tipo === 'DESPESA' ? 'red' : 'blue'">{{lancamentos.valor | currency:'BRL':true:'1.2-2'}}</td>
             <td class="col-acoes">
                   <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left"></button>
-                  <button pButton style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
+                  <button pButton class="ui-button-danger" style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
             </td>
         </tr>
     </ng-template>

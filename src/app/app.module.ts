@@ -9,6 +9,8 @@ import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
+import { LancamentoService } from './lancamentos/lancamento.service';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     BrowserAnimationsModule, //CalendarModule possui dependencia nesse modulo de animação para funcionar
     AppRoutingModule,
+    HttpClientModule,
 
     LancamentosModule,
     PessoasModule,
-
     CoreModule
   ],
-  providers: [],
+  providers: [
+    LancamentoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -42,3 +42,5 @@
 .navbar-menu-item a:hover{ /*quando estiver com o mouse sobre estiliza conforme abaixo*/
     color: #fff;
 }
+
+.bottom1 {position: absolute; bottom: 0px; right: 0px;}

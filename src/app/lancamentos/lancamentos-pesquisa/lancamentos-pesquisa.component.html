@@ -4,7 +4,6 @@
       <div class="ui-g-12">
           <h1>Lançamentos</h1>
         </div>
-
         <div class="ui-g-12 ui-fluid">
             <label>Descrição</label>
             <input pInputText type="text">
@@ -14,7 +13,7 @@
           <label style="display:block">Vencimento</label>
           <input pInputText type="text" style="widows: 95px;">
 
-          <label>até</label>
+          <label style="margin: 4px">até</label>
           <input pInputText type="text" style="widows: 95px;">
           </div>
 
@@ -65,7 +64,7 @@
               </tr>
           </ng-template>
         </p-table> -->
-        <app-lancamentos-grid [lancamentos]="lancamento"></app-lancamentos-grid>
+        <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
         </div>
         <div class="ui-g-12">
           <button pButton type="submit" label="Novo Lançamento"></button>
