@@ -1,45 +1,36 @@
 <div class="container">
   <div class="ui-g">
 
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
       <div class="ui-g-12">
           <h1>Lançamentos</h1>
         </div>
         <div class="ui-g-12 ui-fluid">
             <label>Descrição</label>
-            <input pInputText type="text">
+            <input pInputText type="text" name="descricao" [(ngModel)]="filtro.descricao">
           </div>
 
         <div class="ui-g-12">
           <label style="display:block">Vencimento</label>
-          <input pInputText type="text" style="widows: 95px;">
+          <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }" 
+            name="VencimentoInicio" [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
+
 
           <label style="margin: 4px">até</label>
-          <input pInputText type="text" style="widows: 95px;">
+          <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
+            name="VencimentoFim" [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
           </div>
 
         <div class="ui-g-12">
             <button pButton type="submit" label="Pesquisar"></button>
         </div>
-
+      </form>
   </div>
-
-  <!-- Depreciado, tentando usar o novo -->
-  <!-- <div class="ui-g">
-    <div class="ui-g-12">
-        <p-dataTable [value]="lancamento">
-          <p-column field="pessoa" header="Pessoa"></p-column>
-          <p-column field="descricao" header="Descrição"></p-column>
-          <p-column field="dataVencimento" header="Vencimento" styleClass="col-data"></p-column>
-          <p-column field="dataPagamento" header="Pagamento" styleClass="col-data"></p-column>
-          <p-column field="valor" header="Valor" styleClass="col-valor"></p-column>
-        </p-dataTable>
-      </div>
-    </div> -->
 
     <div class="ui-g">
       <div class="ui-g-12">
         <!-- trasnferido para um componente a parte -->
-        <!-- <p-table [value]="lancamento" [paginator]="true" [rows]="5" [responsive]="true">
+        <p-table [value]="lancamentos" [paginator]="true" [rows]="5" [responsive]="true" emptyMessage="Nenhum registro encontrado.">
           <ng-template pTemplate="header">
               <tr>
                   <th>Pessoa</th>
@@ -50,21 +41,21 @@
                   <th></th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-lancamento >
+          <ng-template pTemplate="body" let-lancamentos >
               <tr>
-                  <td>{{lancamento.pessoa}}</td>
-                  <td>{{lancamento.descricao}}</td>
-                  <td class="col-data">{{lancamento.dataVencimento | date:'dd/MM/y'}}</td>
-                  <td class="col-data">{{lancamento.dataPagamento  | date:'dd/MM/y'}}</td>
-                  <td class="col-valor" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">{{lancamento.valor | currency:'BRL':true:'1.2-2'}}</td>
+                  <td>{{lancamentos.pessoa}}</td>
+                  <td>{{lancamentos.descricao}}</td>
+                  <td class="col-data">{{lancamentos.dataVencimento | date:'dd/MM/y'}}</td>
+                  <td class="col-data">{{lancamentos.dataPagamento  | date:'dd/MM/y'}}</td>
+                  <td class="col-valor" [style.color]="lancamentos.tipo === 'DESPESA' ? 'red' : 'blue'">{{lancamentos.valor | currency:'BRL':true:'1.2-2'}}</td>
                   <td class="col-acoes">
-                      <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left"></button>
-                      <button pButton style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
+                        <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left"></button>
+                        <button pButton class="ui-button-danger" style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
                   </td>
               </tr>
           </ng-template>
-        </p-table> -->
-        <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
+        </p-table>
+        <!-- <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid> -->
         </div>
         <div class="ui-g-12">
           <button pButton type="submit" label="Novo Lançamento"></button>
