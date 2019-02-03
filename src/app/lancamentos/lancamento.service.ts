@@ -44,4 +44,11 @@ export class LancamentoService {
 
     return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`,{headers, params});
   }
+
+  excluir(codigo : number) : Observable<any>{
+
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`,{headers});
+  }
 }

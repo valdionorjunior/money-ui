@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Alert } from 'selenium-webdriver';
 
+import { ToastrService } from 'ngx-toastr';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
@@ -15,8 +16,10 @@ export class LancamentosPesquisaComponent implements OnInit{
   filtro = new LancamentoFiltro();
   totalRegistros = 0;
   lancamentos = [];
+  @ViewChild('tabela') grid;
 
-  constructor(private lancamentoService: LancamentoService) { }
+  constructor(private lancamentoService: LancamentoService,
+              private toastrService: ToastrService) { }
 
   ngOnInit() {
     // this.pesquisar();
@@ -37,4 +40,15 @@ export class LancamentosPesquisaComponent implements OnInit{
     const pagina = event.first / event.rows; //pagina atual que buscamos através do datatable
     this.pesquisar(pagina);
   }
+
+  excluir(lancamento: any){
+    this.lancamentoService.excluir(lancamento.codigo).subscribe(
+      () =>{
+          this.grid.first = 0; //reseta a tabela para pagina 1
+          this.pesquisar();
+          this.toastrService.success('Lançamento excluido com sucesso!');
+      }
+    );
+  }  
+
 }
