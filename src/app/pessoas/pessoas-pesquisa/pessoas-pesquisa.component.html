@@ -1,20 +1,24 @@
 <div class="container">
     <div class="ui-g">
-        <div class="ui-g-12">
-            <h1>Pessoas</h1>
-        </div>
-        <div class="ui-g-12 ui-fluid">
-            <label>Nome</label>
-            <input pInputText type="text">
-        </div>
-        <div class="ui-g-12">
-            <button pButton type="submit" label="Pesquisar"></button>
-        </div>
+        <form autocomplete="off" (ngSubmit)="pesquisar()">
+            <div class="ui-g-12">
+                <h1>Pessoas</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Pesquisar"></button>
+            </div>
+        </form>
     </div>
       <div class="ui-g">
         <div class="ui-g-12">
         <!-- trasnferido para um componente a parte -->
-          <!-- <p-table [value]="pessoas" [paginator]="true" [rows]="5" [responsive]="true">
+        <p-table [value]="pessoas" emptyMessage="Nenhum registro encontrado." 
+            [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nome</th>
@@ -27,17 +31,17 @@
             <ng-template pTemplate="body" let-pessoa >
                 <tr>
                     <td>{{pessoa.nome}}</td>
-                    <td>{{pessoa.cidade}}</td>
-                    <td>{{pessoa.estado}}</td>
+                    <td>{{pessoa.endereco.cidade}}</td>
+                    <td>{{pessoa.endereco.estado}}</td>
                     <td [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top"><a href="#">{{pessoa.ativo ? 'Ativo' : 'Inativo'}}</a></td>
                     <td class="col-acoes">
                           <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left"></button>
-                          <button pButton style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
+                          <button pButton class="ui-button-danger" style="margin-left: 2px" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="right"></button>
                     </td>
                 </tr>
             </ng-template>
-          </p-table> -->
-          <app-pessoas-grid [pessoas]="pessoas"></app-pessoas-grid>
+          </p-table>
+          <!-- <app-pessoas-grid [pessoas]="pessoas"></app-pessoas-grid> -->
           </div>
   
           <div class="ui-g-12">
