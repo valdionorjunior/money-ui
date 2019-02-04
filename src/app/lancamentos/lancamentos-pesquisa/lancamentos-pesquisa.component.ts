@@ -1,8 +1,9 @@
+import { ConfirmationService } from 'primeng/api';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Alert } from 'selenium-webdriver';
 
 import { ToastrService } from 'ngx-toastr';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 
@@ -19,7 +20,9 @@ export class LancamentosPesquisaComponent implements OnInit{
   @ViewChild('tabela') grid;
 
   constructor(private lancamentoService: LancamentoService,
-              private toastrService: ToastrService) { }
+              private ErrorHandler: ErrorHandlerService,
+              private toastrService: ToastrService,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     // this.pesquisar();
@@ -32,6 +35,9 @@ export class LancamentosPesquisaComponent implements OnInit{
       data => { 
         this.lancamentos = JSON.parse(JSON.stringify(data.content));
         this.totalRegistros = JSON.parse(JSON.stringify(data.totalElements));
+      },
+      error => {
+        this.ErrorHandler.handle(error)
       }
     );
   }
@@ -41,14 +47,31 @@ export class LancamentosPesquisaComponent implements OnInit{
     this.pesquisar(pagina);
   }
 
+
+  confirmarExclusao(lancamento: any){
+    this.confirmationService.confirm({
+      message: 'Deseja realmente excluir o lançamento?',
+      header: 'Confirmação de Exclução',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.excluir(lancamento);
+      },
+      // reject: () => {
+        // }
+      });
+  }
+
   excluir(lancamento: any){
-    this.lancamentoService.excluir(lancamento.codigo).subscribe(
-      () =>{
-          this.grid.first = 0; //reseta a tabela para pagina 1
-          this.pesquisar();
-          this.toastrService.success('Lançamento excluido com sucesso!');
-      }
-    );
-  }  
+      this.lancamentoService.excluir(lancamento.codigo).subscribe(
+        () =>{
+            this.grid.first = 0; //reseta a tabela para pagina 1
+            this.pesquisar();
+            this.toastrService.success('Lançamento excluido com sucesso!');
+        },
+        error => {
+          this.ErrorHandler.handle(error)
+        }
+      ); 
+    }  
 
 }

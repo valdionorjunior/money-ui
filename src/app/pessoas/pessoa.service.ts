@@ -39,4 +39,18 @@ export class PessoaService {
     return this.http.get<any[]>(`${this.pessoasUrl}`,{headers});
     
   }
+
+  excluir(codigo : number) : Observable<any>{
+
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`,{headers});
+  }
+
+  mudarStatus (codigo: number, ativo: boolean){
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+    headers = headers.set('Content-Type','application/json');
+
+    return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, ativo, {headers});
+  }
 }

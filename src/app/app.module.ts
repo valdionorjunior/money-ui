@@ -6,13 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { ToastrModule } from 'ngx-toastr';
 
+import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
-import { CoreModule } from './core/core.module';
-import { LancamentoService } from './lancamentos/lancamento.service';
-import { PessoaService } from './pessoas/pessoa.service';
 
 @NgModule({
   declarations: [
@@ -25,16 +22,11 @@ import { PessoaService } from './pessoas/pessoa.service';
     AppRoutingModule,
     HttpClientModule,
 
-    ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),
-
     LancamentosModule,
     PessoasModule,
     CoreModule
   ],
-  providers: [
-    LancamentoService,
-    PessoaService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
