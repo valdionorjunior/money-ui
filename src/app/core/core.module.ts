@@ -21,7 +21,6 @@ registerLocaleData(ptBr)
   imports: [
     CommonModule,
 
-
     ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),
     ConfirmDialogModule,
   ],

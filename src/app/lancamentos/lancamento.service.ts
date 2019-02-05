@@ -1,3 +1,4 @@
+import { LancamentoModel } from './lancamento.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -50,5 +51,12 @@ export class LancamentoService {
     let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
 
     return this.http.delete(`${this.lancamentosUrl}/${codigo}`,{headers});
+  }
+
+  adicionar(lancamento: LancamentoModel) : Observable<any>{
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+    headers = headers.set('Content-Type', 'application/json');
+
+    return this.http.post(this.lancamentosUrl,JSON.stringify(lancamento),{headers});
   }
 }

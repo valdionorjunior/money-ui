@@ -38,7 +38,7 @@ export class PessoasPesquisaComponent implements OnInit{
         this.totalRegistros = JSON.parse(JSON.stringify(data.totalElements));
       },
       error => {
-        this.ErrorHandler.handle(error)
+        this.ErrorHandler.handle(error);
       }
     );
   }
@@ -69,7 +69,7 @@ export class PessoasPesquisaComponent implements OnInit{
             this.toastrService.success('Pessoa excluida com sucesso!');
         },
         error => {
-          this.ErrorHandler.handle(error)
+          this.ErrorHandler.handle(error);
         }
       ); 
     }  
@@ -86,7 +86,7 @@ export class PessoasPesquisaComponent implements OnInit{
             this.toastrService.success(`Pessoa ${acao} com sucesso!`);
         },
         error => {
-          this.ErrorHandler.handle(error)
+          this.ErrorHandler.handle(error);
         }
       ); 
     }
