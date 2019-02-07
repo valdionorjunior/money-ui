@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
@@ -29,14 +31,33 @@ export class LancamentoCadastroComponent implements OnInit {
               private pessoaService : PessoaService,
               private lancamentoService : LancamentoService,
               private toastrService : ToastrService,
-              private ErrorHandler : ErrorHandlerService) { }
+              private errorHandler : ErrorHandlerService,
+              private activatedRoute : ActivatedRoute) { }//ActivatedRoute consegue pegar a rota ativa.
 
   ngOnInit() {
+    const codigoLancamento = this.activatedRoute.snapshot.params['codigo'];//pega o parametro declarado como token na rota ativa
+
+    if(codigoLancamento){//verifica se existe o codigoLancamento - se for undefined não entra
+      this.carregarLancamento(codigoLancamento);
+    }
+
     this.carregarCategorias();
     this. carregarPessoas();
   }
 
+  get editando(){
+    return Boolean(this.lancamento.codigo);
+  }
+
   salvar(form: FormControl){
+    if(this.editando){
+      this.atualizarLancamento(form);//salva edições de lançamento
+    } else {
+      this.adicionarLancamento(form);// salva no lancamento.
+    }
+  }
+
+  adicionarLancamento(form: FormControl){//salva novo lançamento no banco
     this.lancamentoService.adicionar(this.lancamento).subscribe(
       () =>{
         this.toastrService.success('Lancamento adicionado com Sucesso!');
@@ -44,7 +65,32 @@ export class LancamentoCadastroComponent implements OnInit {
         this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
       },
       error => {
-        this.ErrorHandler.handle(error);
+        this.errorHandler.handle(error);
+      }
+    );
+  }
+
+  atualizarLancamento(form: FormControl){//salva a edição de lançamento
+    this.lancamentoService.atualizar(this.lancamento).subscribe(
+      data => {
+        this.lancamento = JSON.parse(JSON.stringify(data));
+        this.converterStringsParaDatas([this.lancamento]);
+        this.toastrService.success('Lancamento alterado com sucesso!');
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
+  }
+
+  carregarLancamento(codigo : number){
+    this.lancamentoService.buscarPorCodigo(codigo).subscribe(
+      data => {
+        this.lancamento = JSON.parse(JSON.stringify(data));
+        this.converterStringsParaDatas([this.lancamento]);
+      },
+      error => {
+        this.errorHandler.handle(error);
       }
     );
   }
@@ -60,7 +106,7 @@ export class LancamentoCadastroComponent implements OnInit {
         )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele
       },
       error => {
-        this.ErrorHandler.handle(error);
+        this.errorHandler.handle(error);
       }
     );
   }
@@ -76,9 +122,21 @@ export class LancamentoCadastroComponent implements OnInit {
         )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele 
       },
       error =>{
-        this.ErrorHandler.handle(error);
+        this.errorHandler.handle(error);
       }
     );
   }
 
+
+  private converterStringsParaDatas(lancamentos: LancamentoModel[]){//Converte a string para uma data
+    for(const lancamento of lancamentos ){
+      lancamento.dataVencimento = moment(lancamento.dataVencimento,'YYYY-MM-DD').toDate();
+
+      //Verifica de Data de pagamento é nula
+      if (lancamento.dataPagamento){
+        lancamento.dataPagamento = moment(lancamento.dataPagamento,'YYYY-MM-DD').toDate();
+      }
+
+    }
+  }
 }

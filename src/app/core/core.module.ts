@@ -11,6 +11,7 @@ import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
+import { RouterModule } from '@angular/router';
 
 registerLocaleData(ptBr)
 
@@ -20,6 +21,7 @@ registerLocaleData(ptBr)
   ],
   imports: [
     CommonModule,
+    RouterModule,//repasse do router Module para que a diretiva routerLink funcione em redirecionamentos de links
 
     ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),
     ConfirmDialogModule,

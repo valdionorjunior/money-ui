@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
@@ -28,6 +29,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
 
     InputTextModule,
     ButtonModule,

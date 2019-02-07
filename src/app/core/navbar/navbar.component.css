@@ -43,4 +43,7 @@
     color: #fff;
 }
 
+.navbar-menu-item.ativo{
+    background-color: #525151;
+}
 .bottom1 {position: absolute; bottom: 0px; right: 0px;}
