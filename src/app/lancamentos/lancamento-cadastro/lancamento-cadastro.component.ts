@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
@@ -10,6 +10,7 @@ import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from '../../categorias/categoria.service';
 import { LancamentoService } from './../lancamento.service';
 import { LancamentoModel } from '../lancamento.model';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -32,7 +33,8 @@ export class LancamentoCadastroComponent implements OnInit {
               private lancamentoService : LancamentoService,
               private toastrService : ToastrService,
               private errorHandler : ErrorHandlerService,
-              private activatedRoute : ActivatedRoute) { }//ActivatedRoute consegue pegar a rota ativa.
+              private activatedRoute : ActivatedRoute,
+              private router: Router) { }//ActivatedRoute consegue pegar a rota ativa.
 
   ngOnInit() {
     const codigoLancamento = this.activatedRoute.snapshot.params['codigo'];//pega o parametro declarado como token na rota ativa
@@ -59,10 +61,12 @@ export class LancamentoCadastroComponent implements OnInit {
 
   adicionarLancamento(form: FormControl){//salva novo lançamento no banco
     this.lancamentoService.adicionar(this.lancamento).subscribe(
-      () =>{
+      data =>{
         this.toastrService.success('Lancamento adicionado com Sucesso!');
-        form.reset();//adicionou o lancamento, reseta o formulario.
-        this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+        // form.reset();//adicionou o lancamento, reseta o formulario.
+        // this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+
+        this.router.navigate(['/lancamentos', data.codigo]);
       },
       error => {
         this.errorHandler.handle(error);
@@ -127,7 +131,6 @@ export class LancamentoCadastroComponent implements OnInit {
     );
   }
 
-
   private converterStringsParaDatas(lancamentos: LancamentoModel[]){//Converte a string para uma data
     for(const lancamento of lancamentos ){
       lancamento.dataVencimento = moment(lancamento.dataVencimento,'YYYY-MM-DD').toDate();
@@ -138,5 +141,16 @@ export class LancamentoCadastroComponent implements OnInit {
       }
 
     }
+  }
+
+  novo(form : FormControl){
+    form.reset();//adicionou o lancamento, reseta o formulario.
+
+    //codigo abaixo é java script
+    setTimeout(function(){//puta gabiarra para que o estado de receita/despesa volte a funcionar
+      this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+    }.bind(this), 1);
+
+    this.router.navigate(['/lancamentos/novo']);
   }
 }
