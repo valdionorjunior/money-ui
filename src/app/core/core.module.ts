@@ -2,6 +2,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { Title } from '@angular/platform-browser';
 
 import { ToastrModule } from 'ngx-toastr';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -12,12 +13,14 @@ import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { RouterModule } from '@angular/router';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(ptBr)
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    PaginaNaoEncontradaComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,8 @@ registerLocaleData(ptBr)
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt'},
+    Title, //Serviço que injeta o titulo nas paginas.
+
     LancamentoService,
     PessoaService,
     ConfirmationService,

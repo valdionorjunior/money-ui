@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 import { ConfirmationService } from 'primeng/api';
@@ -23,9 +24,11 @@ export class PessoasPesquisaComponent implements OnInit{
   constructor(private pessoaService: PessoaService,
     private ErrorHandler: ErrorHandlerService,
     private toastrService: ToastrService,
-    private confirmationService: ConfirmationService){ }
+    private confirmationService: ConfirmationService,
+    private title: Title){ }
 
   ngOnInit(){
+    this.title.setTitle('Pesquisa de Pessoas');// serviço do angular que injeta o titulo na pagina.
 
   }
 

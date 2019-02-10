@@ -62,4 +62,18 @@ export class PessoaService {
 
     return this.http.post(this.pessoasUrl,JSON.stringify(pessoa),{headers});
   }
+
+  atualizar(pessoa: PessoaModel) :  Observable<any>{
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+    headers = headers.set('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`,JSON.stringify(pessoa),{headers});
+  }
+
+  buscarPorCodigo(codigo : number) : Observable<any>{
+    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+
+    return this.http.get(`${this.pessoasUrl}/${codigo}`,{headers});
+  }
+
 }

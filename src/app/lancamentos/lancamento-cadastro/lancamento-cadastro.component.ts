@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
@@ -10,7 +11,6 @@ import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from '../../categorias/categoria.service';
 import { LancamentoService } from './../lancamento.service';
 import { LancamentoModel } from '../lancamento.model';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -34,10 +34,13 @@ export class LancamentoCadastroComponent implements OnInit {
               private toastrService : ToastrService,
               private errorHandler : ErrorHandlerService,
               private activatedRoute : ActivatedRoute,
-              private router: Router) { }//ActivatedRoute consegue pegar a rota ativa.
+              private router: Router,
+              private title: Title) { }//ActivatedRoute consegue pegar a rota ativa.
 
   ngOnInit() {
     const codigoLancamento = this.activatedRoute.snapshot.params['codigo'];//pega o parametro declarado como token na rota ativa
+
+    this.title.setTitle('Novo Lancamento');// serviço do angular que injeta o titulo na pagina.
 
     if(codigoLancamento){//verifica se existe o codigoLancamento - se for undefined não entra
       this.carregarLancamento(codigoLancamento);
@@ -80,6 +83,7 @@ export class LancamentoCadastroComponent implements OnInit {
         this.lancamento = JSON.parse(JSON.stringify(data));
         this.converterStringsParaDatas([this.lancamento]);
         this.toastrService.success('Lancamento alterado com sucesso!');
+        this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
       },
       error => {
         this.errorHandler.handle(error);
@@ -92,6 +96,7 @@ export class LancamentoCadastroComponent implements OnInit {
       data => {
         this.lancamento = JSON.parse(JSON.stringify(data));
         this.converterStringsParaDatas([this.lancamento]);
+        this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
       },
       error => {
         this.errorHandler.handle(error);
@@ -152,5 +157,9 @@ export class LancamentoCadastroComponent implements OnInit {
     }.bind(this), 1);
 
     this.router.navigate(['/lancamentos/novo']);
+  }
+
+  atualizarTituloEdicao(){
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);// serviço do angular que injeta o titulo na pagina.
   }
 }

@@ -1,5 +1,6 @@
 import { ConfirmationService } from 'primeng/api';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { ToastrService } from 'ngx-toastr';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
@@ -22,10 +23,12 @@ export class LancamentosPesquisaComponent implements OnInit{
   constructor(private lancamentoService: LancamentoService,
               private ErrorHandler: ErrorHandlerService,
               private toastrService: ToastrService,
-              private confirmationService: ConfirmationService) { }
+              private confirmationService: ConfirmationService,
+              private title: Title) { }
 
   ngOnInit() {
     // this.pesquisar();
+    this.title.setTitle('Pesquisa de Lancamentos');// serviço do angular que injeta o titulo na pagina.
   }
 
   pesquisar(pagina = 0) {
