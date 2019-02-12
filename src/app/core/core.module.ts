@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { Title } from '@angular/platform-browser';
@@ -8,11 +9,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
+import { AuthService } from './../seguranca/auth.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
-import { RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(ptBr)
@@ -41,7 +42,8 @@ registerLocaleData(ptBr)
     LancamentoService,
     PessoaService,
     ConfirmationService,
-    ErrorHandlerService
+    ErrorHandlerService,
+    AuthService
   ]
 })
 export class CoreModule { }

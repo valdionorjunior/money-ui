@@ -8,23 +8,27 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
+import { SegurancaModule } from './seguranca/seguranca.module';
 import { AppRoutingModule } from './app-routing.module';
+// import { LoginFormComponent } from './seguranca/login-form/login-form.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    // LoginFormComponent,
   ],
   imports: [
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule, //CalendarModule e ToastrModule possui dependencia nesse modulo de animação para funcionar
     HttpClientModule,
-    AppRoutingModule,//repasse de rotas
-
+    
+    CoreModule,
     LancamentosModule,
     PessoasModule,
-    CoreModule
+    SegurancaModule,
+    AppRoutingModule//repasse de rotas
   ],
   providers: [],
   bootstrap: [AppComponent]
