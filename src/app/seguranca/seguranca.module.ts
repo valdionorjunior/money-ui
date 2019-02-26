@@ -4,9 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 import { ButtonModule } from 'primeng/components/button/button';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { AuthService } from './auth.service';
+
+// export function jwtOptionsFactory(authService) {
+//   return {
+//     tokenGetter: () => {
+//       return localStorage.getItem('access_token');
+//     }
+//   }
+// }
 
 @NgModule({
   imports: [
@@ -16,8 +26,19 @@ import { LoginFormComponent } from './login-form/login-form.component';
     InputTextModule,
     ButtonModule,
 
-    SegurancaRoutingModule
+    SegurancaRoutingModule,
+
+    // JwtModule.forRoot({
+    //   jwtOptionsProvider: {
+    //     provide: JWT_OPTIONS,
+    //     useFactory: jwtOptionsFactory,
+    //     deps: [AuthService]
+    //   }
+    // })
   ],
-  declarations: [LoginFormComponent]
+  declarations: [LoginFormComponent],
+  providers:[
+    // AuthService,
+  ]
 })
 export class SegurancaModule { }

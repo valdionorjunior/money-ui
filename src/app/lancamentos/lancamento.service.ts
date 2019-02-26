@@ -26,7 +26,7 @@ export class LancamentoService {
   pesquisar(filtro: LancamentoFiltro) : Observable<any>{
 
     let params = new HttpParams();
-    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+    // let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
 
     params = params.set('page', filtro.pagina.toString());
     params = params.set('size', filtro.itensPorPagina.toString());
@@ -43,7 +43,8 @@ export class LancamentoService {
       params = params.set('dataVencimentoAte', moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));//uso a biblioteca moment para formatar a data
     } 
 
-    return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`,{headers, params});
+    // return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`,{headers, params});
+    return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`,{params});
   }
 
   excluir(codigo : number) : Observable<any>{

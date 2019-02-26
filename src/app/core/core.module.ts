@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -6,6 +7,9 @@ import ptBr from '@angular/common/locales/pt';
 import { Title } from '@angular/platform-browser';
 
 import { ToastrModule } from 'ngx-toastr';
+// import { JwtHelper } from 'angular2-jwt';//jwt para decodificar logins, Embora o Angular 7 ja possui um serviço sem precisar de bibliotecas de terceiros
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';//subistitui a de
+import { JwtModule } from '@auth0/angular-jwt';//jwt para decodificar logins, Embora o Angular 7 ja possui um serviço sem precisar de bibliotecas de terceiros
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
@@ -18,6 +22,10 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 
 registerLocaleData(ptBr)
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -29,6 +37,15 @@ registerLocaleData(ptBr)
 
     ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),
     ConfirmDialogModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter:tokenGetter,
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes : ['localhost:8080/api/auth']
+      }
+    })
+    
   ],
   exports: [
     NavbarComponent,
@@ -43,7 +60,9 @@ registerLocaleData(ptBr)
     PessoaService,
     ConfirmationService,
     ErrorHandlerService,
-    AuthService
+    AuthService,
+    JwtHelperService,
+
   ]
 })
 export class CoreModule { }
