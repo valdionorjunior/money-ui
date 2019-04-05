@@ -12,7 +12,8 @@ export class CategoriaService {
   constructor(private http: HttpClient) { }
 
   listarTodas() : Observable<any>{
-    let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
-    return this.http.get<any[]>(`${this.categoriasUrl}`,{headers});
+    //retirado pois a autenticação agora é veita por token vinda a api
+    // let headers = new  HttpHeaders().set('Authorization', 'Basic dmFsZGlvbm9yanVuaW9yQG91dGxvb2suY29tOkJ3aTI4MDI4MSo=');
+    return this.http.get<any[]>(`${this.categoriasUrl}`);
   }
 }

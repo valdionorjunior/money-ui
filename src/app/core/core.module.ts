@@ -23,7 +23,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 registerLocaleData(ptBr)
 
 export function tokenGetter() {
-  return localStorage.getItem('token');
+  return localStorage.getItem('access_token');
 }
 
 @NgModule({

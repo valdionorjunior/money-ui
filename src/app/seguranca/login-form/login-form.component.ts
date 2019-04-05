@@ -22,6 +22,11 @@ export class LoginFormComponent implements OnInit {
   }
 
   login(usuario : string, senha : string){
+    
+    // if(localStorage.getItem('token')){//remore o token ao relogar
+    //   localStorage.removeItem('token');
+    // }
+
     this.authService.login(usuario, senha).subscribe(
       data =>{
         this.authService.armazenarToken(JSON.parse(JSON.stringify(data.access_token)));//repassado o token vindo da api. Embora ja me retorna um objeto json eu vo reconverter so por segurança
