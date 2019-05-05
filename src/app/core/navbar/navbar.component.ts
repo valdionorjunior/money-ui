@@ -10,22 +10,24 @@ import { AuthService } from './../../seguranca/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  exibindoMenu = false;
+
   constructor(private authService : AuthService,
               private errorHandler : ErrorHandlerService) { }
 
   ngOnInit() {
   }
 
-  criarNovoAccessToken(){
-    this.authService.obterNovoAccessToken().subscribe(
-      data =>{
-        alert('Entro nessa bagaça!');
-        this.authService.armazenarToken(JSON.parse(JSON.stringify(data.access_token)));//repassado o token vindo da api. Embora ja me retorna um objeto json eu vo reconverter so por segurança
-      },
-      error =>{
-        return this.errorHandler.handle('Erro ao criar novo access token!');
-      }
-    );
-  }
+  // criarNovoAccessToken(){
+  //   this.authService.obterNovoAccessToken().subscribe(
+  //     data =>{
+  //       alert('Entro nessa bagaça!');
+  //       this.authService.armazenarToken(JSON.parse(JSON.stringify(data.access_token)));//repassado o token vindo da api. Embora ja me retorna um objeto json eu vo reconverter so por segurança
+  //     },
+  //     error =>{
+  //       return this.errorHandler.handle('Erro ao criar novo access token!');
+  //     }
+  //   );
+  // }
 
 }

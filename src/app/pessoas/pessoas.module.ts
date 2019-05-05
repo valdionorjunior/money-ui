@@ -24,7 +24,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     PessoasPesquisaComponent,
     PessoaCadastroComponent,
-    PessoasGridComponent
+    // PessoasGridComponent
   ],
   imports: [
     CommonModule,

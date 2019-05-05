@@ -1,13 +1,21 @@
 import { ToastrService } from 'ngx-toastr';
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { NotAuthenticatedError } from './../seguranca/money-http';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService {
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(
+    // private messageService: MessageService,
+    private toastrService: ToastrService,
+    private router: Router
+    ) { }
 
   handle(errorResponse: any){
     let msg: string;
@@ -15,7 +23,7 @@ export class ErrorHandlerService {
     if(typeof errorResponse === 'string'){
       msg = errorResponse;
 
-    }else if(errorResponse instanceof HttpErrorResponse 
+    } else if(errorResponse instanceof HttpErrorResponse 
       && errorResponse.status >=400 && errorResponse.status <=499){
       let errors;
       // alert(JSON.stringify(errorResponse.error[0].mensagemUsuario));
@@ -35,6 +43,7 @@ export class ErrorHandlerService {
       console.log('Ocorreu um erro: ', errorResponse);
     }
 
+    // this.messageService.add({ severity: 'error', detail: msg });
     this.toastrService.error(msg);
   }
 

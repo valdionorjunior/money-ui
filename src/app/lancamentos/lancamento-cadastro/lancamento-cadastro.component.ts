@@ -28,14 +28,16 @@ export class LancamentoCadastroComponent implements OnInit {
   pessoas = [];
   lancamento = new LancamentoModel();
 
-  constructor(private categoriasService : CategoriaService,
-              private pessoaService : PessoaService,
-              private lancamentoService : LancamentoService,
-              private toastrService : ToastrService,
-              private errorHandler : ErrorHandlerService,
-              private activatedRoute : ActivatedRoute,
-              private router: Router,
-              private title: Title) { }//ActivatedRoute consegue pegar a rota ativa.
+  constructor(
+    private categoriasService : CategoriaService,
+    private pessoaService : PessoaService,
+    private lancamentoService : LancamentoService,
+    private toastrService : ToastrService,
+    private errorHandler : ErrorHandlerService,
+    private activatedRoute : ActivatedRoute,
+    private router: Router,
+    private title: Title
+  ) { }//ActivatedRoute consegue pegar a rota ativa.
 
   ngOnInit() {
     const codigoLancamento = this.activatedRoute.snapshot.params['codigo'];//pega o parametro declarado como token na rota ativa
@@ -62,98 +64,155 @@ export class LancamentoCadastroComponent implements OnInit {
     }
   }
 
-  adicionarLancamento(form: FormControl){//salva novo lançamento no banco
-    this.lancamentoService.adicionar(this.lancamento).subscribe(
-      data =>{
+  // adicionarLancamento(form: FormControl){//salva novo lançamento no banco
+  //   this.lancamentoService.adicionar(this.lancamento).subscribe(
+  //     data =>{
+  //       this.toastrService.success('Lancamento adicionado com Sucesso!');
+  //       // form.reset();//adicionou o lancamento, reseta o formulario.
+  //       // this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+
+  //       this.router.navigate(['/lancamentos', data.codigo]);
+  //     },
+  //     error => {
+  //       this.errorHandler.handle(error);
+  //     }
+  //   );
+  // }
+  adicionarLancamento(form: FormControl) {
+    this.lancamentoService.adicionar(this.lancamento)
+      .then(lancamentoAdicionado => {
+        // this.toasty.success('Lançamento adicionado com sucesso!');
         this.toastrService.success('Lancamento adicionado com Sucesso!');
-        // form.reset();//adicionou o lancamento, reseta o formulario.
-        // this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
 
-        this.router.navigate(['/lancamentos', data.codigo]);
-      },
-      error => {
-        this.errorHandler.handle(error);
-      }
-    );
+        // form.reset();
+        // this.lancamento = new Lancamento();
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  atualizarLancamento(form: FormControl){//salva a edição de lançamento
-    this.lancamentoService.atualizar(this.lancamento).subscribe(
-      data => {
-        this.lancamento = JSON.parse(JSON.stringify(data));
-        this.converterStringsParaDatas([this.lancamento]);
+  // atualizarLancamento(form: FormControl){//salva a edição de lançamento
+  //   this.lancamentoService.atualizar(this.lancamento).subscribe(
+  //     data => {
+  //       this.lancamento = JSON.parse(JSON.stringify(data));
+  //       this.converterStringsParaDatas([this.lancamento]);
+  //       this.toastrService.success('Lancamento alterado com sucesso!');
+  //       this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
+  //     },
+  //     error => {
+  //       this.errorHandler.handle(error);
+  //     }
+  //   );
+  // }
+  atualizarLancamento(form: FormControl) {
+    this.lancamentoService.atualizar(this.lancamento)
+      .then(lancamento => {
+        this.lancamento = lancamento;
+
+        // this.toasty.success('Lançamento alterado com sucesso!');
         this.toastrService.success('Lancamento alterado com sucesso!');
-        this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
-      },
-      error => {
-        this.errorHandler.handle(error);
-      }
-    );
+        this.atualizarTituloEdicao();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarLancamento(codigo : number){
-    this.lancamentoService.buscarPorCodigo(codigo).subscribe(
-      data => {
-        this.lancamento = JSON.parse(JSON.stringify(data));
-        this.converterStringsParaDatas([this.lancamento]);
-        this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
-      },
-      error => {
-        this.errorHandler.handle(error);
-      }
-    );
+  // carregarLancamento(codigo : number){
+  //   this.lancamentoService.buscarPorCodigo(codigo).subscribe(
+  //     data => {
+  //       this.lancamento = JSON.parse(JSON.stringify(data));
+  //       this.converterStringsParaDatas([this.lancamento]);
+  //       this.atualizarTituloEdicao(); //edita titulo da pagina de acordo se é novo ou edição de lancamentos
+  //     },
+  //     error => {
+  //       this.errorHandler.handle(error);
+  //     }
+  //   );
+  // }
+  carregarLancamento(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo)
+      .then(lancamento => {
+        this.lancamento = lancamento;
+        this.atualizarTituloEdicao();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarCategorias(){
-    this.categoriasService.listarTodas().subscribe(
-      data => { 
-        this.categorias = JSON.parse(JSON.stringify(
-          data.map( 
-            c => {//função (air function)
-              return { label: c.nome, value: c.codigo};
-          })//FIN da função / fim do map
-        )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele
-      },
-      error => {
-        this.errorHandler.handle(error);
-      }
-    );
+  // carregarCategorias(){
+  //   this.categoriasService.listarTodas().subscribe(
+  //     data => { 
+  //       this.categorias = JSON.parse(JSON.stringify(
+  //         data.map( 
+  //           c => {//função (air function)
+  //             return { label: c.nome, value: c.codigo};
+  //         })//FIN da função / fim do map
+  //       )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele
+  //     },
+  //     error => {
+  //       this.errorHandler.handle(error);
+  //     }
+  //   );
+  // }
+  carregarCategorias() {
+    return this.categoriasService.listarTodas()
+      .then(categorias => {
+        this.categorias = categorias
+          .map(c => ({ label: c.nome, value: c.codigo }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarPessoas(){
-    this.pessoaService.listarTodas().subscribe(
-      data => {
-        this.pessoas = JSON.parse(JSON.stringify(
-          data.content.map(
-            p => {//função (air function)
-              return { label: p.nome, value: p.codigo};
-          })//FIN da função / fim do map
-        )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele 
-      },
-      error =>{
-        this.errorHandler.handle(error);
-      }
-    );
+  // carregarPessoas(){
+  //   this.pessoaService.listarTodas().subscribe(
+  //     data => {
+  //       this.pessoas = JSON.parse(JSON.stringify(
+  //         data.content.map(
+  //           p => {//função (air function)
+  //             return { label: p.nome, value: p.codigo};
+  //         })//FIN da função / fim do map
+  //       )); //map idera todos os elementos dentro do data, para cada elemento ou objeto, executa a função passada como parametro nele 
+  //     },
+  //     error =>{
+  //       this.errorHandler.handle(error);
+  //     }
+  //   );
+  // }
+  carregarPessoas() {
+    this.pessoaService.listarTodas()
+      .then(pessoas => {
+        this.pessoas = pessoas
+          .map(p => ({ label: p.nome, value: p.codigo }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  private converterStringsParaDatas(lancamentos: LancamentoModel[]){//Converte a string para uma data
-    for(const lancamento of lancamentos ){
-      lancamento.dataVencimento = moment(lancamento.dataVencimento,'YYYY-MM-DD').toDate();
+  //COVERSOR DE STRING PARA DATA
+  // private converterStringsParaDatas(lancamentos: LancamentoModel[]){//Converte a string para uma data
+  //   for(const lancamento of lancamentos ){
+  //     lancamento.dataVencimento = moment(lancamento.dataVencimento,'YYYY-MM-DD').toDate();
 
-      //Verifica de Data de pagamento é nula
-      if (lancamento.dataPagamento){
-        lancamento.dataPagamento = moment(lancamento.dataPagamento,'YYYY-MM-DD').toDate();
-      }
+  //     //Verifica de Data de pagamento é nula
+  //     if (lancamento.dataPagamento){
+  //       lancamento.dataPagamento = moment(lancamento.dataPagamento,'YYYY-MM-DD').toDate();
+  //     }
 
-    }
-  }
+  //   }
+  // }
 
-  novo(form : FormControl){
-    form.reset();//adicionou o lancamento, reseta o formulario.
+  // novo(form : FormControl){
+  //   form.reset();//adicionou o lancamento, reseta o formulario.
 
-    //codigo abaixo é java script
-    setTimeout(function(){//puta gabiarra para que o estado de receita/despesa volte a funcionar
-      this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+  //   //codigo abaixo é java script
+  //   setTimeout(function(){//puta gabiarra para que o estado de receita/despesa volte a funcionar
+  //     this.lancamento = new LancamentoModel();//reseta também o lançamento instanciando um novo a ele.
+  //   }.bind(this), 1);
+
+  //   this.router.navigate(['/lancamentos/novo']);
+  // }
+  novo(form: FormControl) {
+    form.reset();
+
+    setTimeout(function() {
+      this.lancamento = new LancamentoModel();
     }.bind(this), 1);
 
     this.router.navigate(['/lancamentos/novo']);

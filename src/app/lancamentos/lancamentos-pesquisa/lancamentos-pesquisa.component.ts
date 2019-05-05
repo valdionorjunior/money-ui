@@ -20,29 +20,41 @@ export class LancamentosPesquisaComponent implements OnInit{
   lancamentos = [];
   @ViewChild('tabela') grid;
 
-  constructor(private lancamentoService: LancamentoService,
-              private ErrorHandler: ErrorHandlerService,
-              private toastrService: ToastrService,
-              private confirmationService: ConfirmationService,
-              private title: Title) { }
+  constructor(
+    private lancamentoService: LancamentoService,
+    private errorHandler: ErrorHandlerService,
+    private toastrService: ToastrService,
+    private confirmationService: ConfirmationService,
+    private title: Title
+  ) { }
 
   ngOnInit() {
     // this.pesquisar();
     this.title.setTitle('Pesquisa de Lancamentos');// serviço do angular que injeta o titulo na pagina.
   }
 
+  // pesquisar(pagina = 0) {
+  //   this.filtro.pagina = pagina;
+
+  //   this.lancamentoService.pesquisar(this.filtro).subscribe(
+  //     data => { 
+  //       this.lancamentos = JSON.parse(JSON.stringify(data.content));
+  //       this.totalRegistros = JSON.parse(JSON.stringify(data.totalElements));
+  //     },
+  //     error => {
+  //       this.errorHandler.handle(error)
+  //     }
+  //   );
+  // }
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
 
-    this.lancamentoService.pesquisar(this.filtro).subscribe(
-      data => { 
-        this.lancamentos = JSON.parse(JSON.stringify(data.content));
-        this.totalRegistros = JSON.parse(JSON.stringify(data.totalElements));
-      },
-      error => {
-        this.ErrorHandler.handle(error)
-      }
-    );
+    this.lancamentoService.pesquisar(this.filtro)
+      .then(resultado => {
+        this.totalRegistros = resultado.total;
+        this.lancamentos = resultado.lancamentos;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: LazyLoadEvent){
@@ -64,17 +76,31 @@ export class LancamentosPesquisaComponent implements OnInit{
       });
   }
 
-  excluir(lancamento: any){
-      this.lancamentoService.excluir(lancamento.codigo).subscribe(
-        () =>{
-            this.grid.first = 0; //reseta a tabela para pagina 1
+  // excluir(lancamento: any){
+  //     this.lancamentoService.excluir(lancamento.codigo).subscribe(
+  //       () =>{
+  //           this.grid.first = 0; //reseta a tabela para pagina 1
+  //           this.pesquisar();
+  //           this.toastrService.success('Lançamento excluido com sucesso!');
+  //       },
+  //       error => {
+  //         this.errorHandler.handle(error)
+  //       }
+  //     ); 
+  //   }  
+    excluir(lancamento: any) {
+      this.lancamentoService.excluir(lancamento.codigo)
+        .then(() => {
+          if (this.grid.first === 0) {
             this.pesquisar();
-            this.toastrService.success('Lançamento excluido com sucesso!');
-        },
-        error => {
-          this.ErrorHandler.handle(error)
-        }
-      ); 
-    }  
+          } else {
+            this.grid.first = 0;
+          }
+  
+          // this.toasty.success('Lançamento excluído com sucesso!');
+          this.toastrService.success('Lançamento excluido com sucesso!');
+        })
+        .catch(erro => this.errorHandler.handle(erro));
+    }
 
 }

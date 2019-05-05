@@ -1,4 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { MoneyHttp } from './../seguranca/money-http';
+import { CategoriaService } from './../categorias/categoria.service';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,10 +10,11 @@ import { Title } from '@angular/platform-browser';
 
 import { ToastrModule } from 'ngx-toastr';
 // import { JwtHelper } from 'angular2-jwt';//jwt para decodificar logins, Embora o Angular 7 ja possui um serviço sem precisar de bibliotecas de terceiros
-import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';//subistitui a de
+import { JwtHelperService } from '@auth0/angular-jwt';//subistitui a de
 import { JwtModule } from '@auth0/angular-jwt';//jwt para decodificar logins, Embora o Angular 7 ja possui um serviço sem precisar de bibliotecas de terceiros
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { GrowlModule } from 'primeng/growl'
 
 import { AuthService } from './../seguranca/auth.service';
 import { PessoaService } from './../pessoas/pessoa.service';
@@ -20,11 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
-registerLocaleData(ptBr)
-
-export function tokenGetter() {
-  return localStorage.getItem('access_token');
-}
+registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [
@@ -33,23 +32,19 @@ export function tokenGetter() {
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule,//repasse do router Module para que a diretiva routerLink funcione em redirecionamentos de links
 
     ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),
+    // GrowlModule,
     ConfirmDialogModule,
 
-    JwtModule.forRoot({
-      config: {
-        tokenGetter:tokenGetter,
-        whitelistedDomains: ['localhost:8080'],
-        blacklistedRoutes : ['localhost:8080/api/auth']
-      }
-    })
-    
   ],
   exports: [
     NavbarComponent,
     ToastrModule,
+    // GrowlModule,
+
     ConfirmDialogModule
   ],
   providers: [
@@ -58,11 +53,14 @@ export function tokenGetter() {
 
     LancamentoService,
     PessoaService,
-    ConfirmationService,
+    CategoriaService,
     ErrorHandlerService,
     AuthService,
+    MoneyHttp,
+    
+    ConfirmationService,
+    MessageService,
     JwtHelperService,
-
   ]
 })
 export class CoreModule { }

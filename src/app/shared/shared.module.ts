@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { MensagemComponent } from './mensagem/mensagem.component';
 
@@ -13,7 +12,6 @@ import { MessageModule } from 'primeng/message';
   ],
   imports: [
     CommonModule,
-    FormsModule,
 
     MessagesModule,
     MessageModule,
